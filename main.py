@@ -1,20 +1,17 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 from flask_restful import Resource, Api
 from joblib import load
 import pandas as pd
 
-app = Flask(__name__, template_folder='template')  # Defina o diretório dos templates
+app = Flask(__name__, template_folder='template')  
 api = Api(app)
 modelo = load('ML.joblib')
 
 class Pricing(Resource):
-    @app.route("/")
-    def hello_world():
+    def get(self):
         return render_template("form.html")
 
-    @app.route('/form', methods=['POST'])
-    def form():
-        
+    def post(self):
         product_name_length = request.form.get('product_name_length')
         product_description_length = request.form.get('product_description_length')
         product_photos_qty = request.form.get('product_photos_qty')
@@ -24,7 +21,6 @@ class Pricing(Resource):
         product_width_cm = request.form.get('product_width_cm')
         product_category_name = request.form.get('product_category_name')
 
-        
         input_df = pd.DataFrame({
             'product_name_length': [product_name_length],
             'product_description_length': [product_description_length],
@@ -36,13 +32,10 @@ class Pricing(Resource):
             'product_category_name': [product_category_name]
         })
 
-        # Faça a previsão usando o modelo
         predict = modelo.predict(input_df)[0]
-
-        # Renderize o template com o resultado da previsão
         return render_template('result.html', prediction=predict)
 
-api.add_resource(Pricing, '/')
+api.add_resource(Pricing, '/form')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,36 +1,108 @@
-<h1>ML Pricing App</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Pricing App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+        
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>ML Pricing App</h1>
     <form id="pricing-form" method="post">
         <label for="product_name_length">Product Name Length:</label>
         <input type="text" id="product_name_length" name="product_name_length" required>
-        <input type="int" id="product_name_length" name="product_name_length" required>
 
         <label for="product_description_length">Product Description Length:</label>
         <input type="text" id="product_description_length" name="product_description_length" required>
-    <input type = "int" id="product_description_length" name="product_description_length" required>
 
         <label for="product_photos_qty">Product Photos Quantity:</label>
         <input type="text" id="product_photos_qty" name="product_photos_qty" required>
-    <input type = "int" id="product_photos_qty" name="product_photos_qty" required>
 
         <label for="product_weight_g">Product Weight (g):</label>
         <input type="text" id="product_weight_g" name="product_weight_g" required>
-    <input type = "int" id="product_weight_g" name="product_weight_g" required>
 
         <label for="product_length_cm">Product Length (cm):</label>
         <input type="text" id="product_length_cm" name="product_length_cm" required>
-    <input type = "int" id="product_length_cm" name="product_length_cm" required>
 
         <label for="product_height_cm">Product Height (cm):</label>
         <input type="text" id="product_height_cm" name="product_height_cm" required>
-    <input type = "int" id="product_height_cm" name="product_height_cm" required>
 
         <label for="product_width_cm">Product Width (cm):</label>
         <input type="text" id="product_width_cm" name="product_width_cm" required>
-    <input type = "int" id="product_width_cm" name="product_width_cm" required>
 
         <label for="product_category_name">Product Category Name:</label>
         <input type="text" id="product_category_name" name="product_category_name" required>
-    <input type = "int" id="product_category_name" name="product_category_name" required>
 
         <button type="submit">Submit</button>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('pricing-form');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Accept", "application/json");
+
+
+            // Coletar dados do formulário
+            var formData = new FormData(form);
+            var data = {};
+
+            formData.forEach(function (value, key) {
+                data[key] = value;
+            });
+
+            // Enviar dados para o servidor via AJAX
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: JSON.stringify(data),
+                redirect: 'follow'
+            };
+
+            fetch("https://web-production-e093.up.railway.app/", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        });
+    });
+
+    </script>
+</body>
+</html>

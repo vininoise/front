@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="./style.css">
     <title>ML Pricing App</title>
 </head>
 <body>
     <h1>ML Pricing App</h1>
-    <form id="pricing-form" method="post" action="/form">
+    <form id="pricing-form" method="post">
         <label for="product_name_length">Product Name Length:</label>
         <input type="text" id="product_name_length" name="product_name_length" required>
 
@@ -36,6 +36,6 @@
         <button type="submit">Submit</button>
     </form>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="./script.js"></script>
 </body>
 </html>

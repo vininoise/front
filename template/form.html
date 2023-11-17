@@ -96,10 +96,10 @@
                 redirect: 'follow'
             };
 
-            fetch("https://web-production-e093.up.railway.app/", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            fetch("http://127.0.0.1:5000/", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
         });
     });
 

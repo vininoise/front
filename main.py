@@ -2,17 +2,22 @@ from flask import Flask, render_template, request, jsonify
 from flask_restful import Resource, Api
 from joblib import load
 import pandas as pd
+from flask_cors import CORS
+
+# Configure CORS com as opções fornecidas
+
 
 app = Flask(__name__, template_folder='template')  # Defina o diretório dos templates
 api = Api(app)
 modelo = load('ML.joblib')
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 class Pricing(Resource):
     @app.route("/")
     def hello_world():
         return render_template("form.html")
 
-    @app.route('/form', methods=['POST'])
+    @app.route('/form', methods=['GET', 'POST'])
     def form():
 
         product_name_length = request.form.get('product_name_length')
